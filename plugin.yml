@@ -1,0 +1,6 @@
+name: DeviceACM
+main: fernanACM\DeviceACM\DV
+version: 1.0
+api: 4.0.0
+author: fernanACM
+website: https://github.com/fernanACM
