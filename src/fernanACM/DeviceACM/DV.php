@@ -12,9 +12,19 @@ use pocketmine\network\mcpe\protocol\types\DeviceOS;
 use fernanACM\DeviceACM\DeviceTask;
 
 class DV extends PluginBase {
+  
+  public static $instance;
 	
-	public function onEnable(): void{
-    $this->getScheduler()->scheduleRepeatingTask(new DeviceTask($this), 11);
+  public function onLoad(): void{
+     self::$instance = $this;
+  }
+	
+  public function onEnable(): void{
+     $this->getScheduler()->scheduleRepeatingTask(new DeviceTask($this), 11);
+  }
+	
+  public static function getInstance(){
+  	return self::$instance;
   }
     
   public function getPlayerPlatform(Player $player): string {
