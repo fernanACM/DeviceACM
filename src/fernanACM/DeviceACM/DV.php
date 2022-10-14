@@ -21,6 +21,8 @@ use pocketmine\network\mcpe\protocol\types\DeviceOS;
 
 use fernanACM\DeviceACM\task\DeviceTask;
 
+use fernanACM\DeviceACM\Event;
+
 use fernanACM\DeviceACM\utils\PluginUtils;
 
 use fernanACM\DeviceACM\faction\FactionSupport;
