@@ -12,9 +12,9 @@
 
 ### 💡 Implementations
 * [X] Configuration
-* [x] Faction support: [PiggyFactions](https://github.com/DaPigGuy/PiggyFactions) & [SimpleFaction](https://github.com/SixpennyYard/SimpleFaction)
+* [x] Faction support: [PiggyFactions](https://github.com/DaPigGuy/PiggyFactions) & [SimpleFaction](https://github.com/AyzrixYTB/SimpleFaction)
 * [x] ScoreTag customization.
-* [x] Keys in (language).yml.
+* [x] Keys in config.yml.
 
 ### 💾 Config 
 ```yaml
@@ -85,6 +85,12 @@
   Devicetag:
     line: "&c♥ {HEALTH}&f |  {FOOD}{LINE}&aPing: &f{PING} |&6 CPS:&f {CPS} |&b {DEVICE}{LINE}&cFaction: &a{FACTION}&f | &cPower:&a {FACTION_POWER}&f | &cRank:&a    {FACTION_RANK}"
 ```
+### 🛠 Faction support
+| Author | Plugin |
+| -------|---------|
+| DaDevPig | [PiggyFactions](https://github.com/DaPigGuy/PiggyFactions) |
+| AyzrixYTB | [SimpleFaction](https://github.com/AyzrixYTB/SimpleFaction) |
+***
 
 ### 📞 Contact
 | Redes | Tag | Link |
