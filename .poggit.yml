@@ -5,7 +5,7 @@ branches:
 projects:
   DeviceACM:
     path: ""
-    icon: icon.png
+    icon: icon-deviceacm.png
     lint:
       phpstan: false
 ...
