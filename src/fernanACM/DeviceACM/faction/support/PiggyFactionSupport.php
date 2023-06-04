@@ -21,8 +21,9 @@ class PiggyFactionSupport extends FactionSupport{
 
     /**
      * @param Player $player
+     * @return string
      */
-    public function getFaction(Player $player){
+    public function getFaction(Player $player): string{
         $factionName = null;
         $faction = PlayerManager::getInstance()->getPlayerFaction($player->getUniqueId());
         if(!is_null($faction)) $factionName = $faction->getName();
@@ -32,8 +33,9 @@ class PiggyFactionSupport extends FactionSupport{
 
     /**
      * @param Player $player
+     * @return string
      */
-    public function getFactionRank(Player $player){
+    public function getFactionRank(Player $player): string{
         $factionRank = null;
         $member = PlayerManager::getInstance()->getPlayer($player);
         $faction = $member === null ? null : $member->getFaction();
@@ -44,8 +46,9 @@ class PiggyFactionSupport extends FactionSupport{
 
     /**
      * @param Player $player
+     * @return string
      */
-    public function getFactionPower(Player $player){
+    public function getFactionPower(Player $player): string{
         $factionPower = null;
         $member = PlayerManager::getInstance()->getPlayer($player);
         $faction = $member === null ? null : $member->getFaction();

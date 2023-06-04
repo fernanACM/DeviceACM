@@ -18,11 +18,13 @@ use fernanACM\DeviceACM\DV;
 
 class PluginUtils{
 
-    public static $cps = [];
+    /** @var array $cps */
+    public static array $cps = [];
 
     /**
      * @param Player $player
      * @param string $score
+     * @return string
      */
     public static function DeviceCode(Player $player, string $score): string{
         $replacements = [
@@ -58,12 +60,12 @@ class PluginUtils{
             "{BOLD}" => TextFormat::BOLD,
             "{RESET}" => TextFormat::RESET
         ];
-        return str_replace(array_keys($replacements), $replacements, $score);
+        return strtr($score, $replacements);
     }
 
     /**
      * @param Player $player
-     * @return string
+     * @return int
      */
     public static function getCps(Player $player): int{
         if(!isset(self::$cps[$player->getDisplayName()])){
@@ -80,8 +82,9 @@ class PluginUtils{
 
     /**
      * @param Player $player
+     * @return void
      */
-    public static function setCps(Player $player){
+    public static function setCps(Player $player): void{
         if(!isset(self::$cps[$player->getDisplayName()])){
             self::$cps[$player->getDisplayName()] = [time(), 0];
         }

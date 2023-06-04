@@ -1,7 +1,7 @@
 name: DeviceACM
 main: fernanACM\DeviceACM\DV
-version: 2.0.0
-api: 4.0.0
+version: 3.0.0
+api: 5.0.0
 author: fernanACM
 description: "A simple and customizable tag via 'config.yml'. Shows your health, hunger, connection, device, cps and faction (ONLY IF YOU ACTIVATE SUPPORT). The best tag for Pocketmine 4.0 servers."
 website: https://github.com/fernanACM

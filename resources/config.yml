@@ -9,7 +9,7 @@
 # The best tag for Pocketmine 4.0 servers.
 
 # VERSION CONFIG
-config-version: "1.0.0"
+config-version: "2.0.0"
 
 # ======(KEYS)======
 # PLUGIN:
@@ -63,4 +63,24 @@ Faction:
 
 # ======(DEVICE TAG)======
 Devicetag:
-  line: "&c♥ {HEALTH}&f |  {FOOD}{LINE}&aPing: &f{PING} |&6 CPS:&f {CPS} |&b {DEVICE}{LINE}&cFaction: &a{FACTION}&f | &cPower:&a {FACTION_POWER}&f | &cRank:&a {FACTION_RANK}"
+  line: 
+    - "&c♥ {HEALTH}&f |  {FOOD}"
+    - "&aPing: &f{PING} |&6 CPS:&f {CPS} |&b {DEVICE}"
+    - "&cFaction: &a{FACTION}&f | &cPower:&a {FACTION_POWER}&f | &cRank:&a {FACTION_RANK}"
+# ======(PLATAFORM TAG)======
+Platform:
+  Android: "Android"
+  iOS: "iOS"
+  macOS: "macOS"
+  FireOS: "Amazon"
+  GearVR: "Gear VR"
+  Hololens: "Hololens"
+  Windows10: "Windows 10"
+  Windows7: "Win32"
+  Dedicated: "Dedicated"
+  TVOS: "TV OS"
+  PlayStation: "PlayStation"
+  NintendoSwitch: "Nintendo"
+  Xbox: "Xbox"
+  WindowsPhone: "Windows Phone"
+  Unknown: "Unknown"

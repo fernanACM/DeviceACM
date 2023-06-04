@@ -19,14 +19,22 @@ use fernanACM\DeviceACM\DV;
 
 class SimpleFactionSupport extends FactionSupport{
 
-    public function getFaction(Player $player){
+    /**
+     * @param Player $player
+     * @return string
+     */
+    public function getFaction(Player $player): string{
         $factionName = null;
         $factionName = FactionsAPI::getFaction($player->getName());
         if($factionName === "" || is_null($factionName)) $factionName = DV::getInstance()->config->getNested("Faction.no-faction");
         return $factionName;
     }
 
-    public function getFactionRank(Player $player){
+    /**
+     * @param Player $player
+     * @return string
+     */
+    public function getFactionRank(Player $player): string{
         $factionRank = null;
         foreach(FactionsAPI::getAllPlayers(FactionsAPI::getFaction($player->getName())) as $players){
             if(FactionsAPI::getRank($players) === "Leader") {
@@ -39,7 +47,11 @@ class SimpleFactionSupport extends FactionSupport{
         return "NO RANK";
     }
 
-    public function getFactionPower(Player $player){
+    /**
+     * @param Player $player
+     * @return string
+     */
+    public function getFactionPower(Player $player): string{
         $factionPower = null;
         $factionPower = FactionsAPI::getPower(FactionsAPI::getFaction($player));
         if($factionPower === "" || is_null($factionPower)) $factionPower = "0";

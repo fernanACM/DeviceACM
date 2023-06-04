@@ -14,9 +14,21 @@ use pocketmine\player\Player;
 
 abstract class FactionSupport{
 
-    abstract public function getFaction(Player $player);
+    /**
+     * @param Player $player
+     * @return string
+     */
+    abstract public function getFaction(Player $player): string;
 
-    abstract public function getFactionRank(Player $player);
+    /**
+     * @param Player $player
+     * @return string
+     */
+    abstract public function getFactionRank(Player $player): string;
 
-    abstract public function getFactionPower(Player $player);
+    /**
+     * @param Player $player
+     * @return string
+     */
+    abstract public function getFactionPower(Player $player): string;
 }

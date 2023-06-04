@@ -26,42 +26,58 @@ use fernanACM\DeviceACM\Event;
 use fernanACM\DeviceACM\utils\PluginUtils;
 
 use fernanACM\DeviceACM\faction\FactionSupport;
+use fernanACM\DeviceACM\faction\support\BedrockClansSupport;
+use fernanACM\DeviceACM\faction\support\FactionMasterSupport;
 use fernanACM\DeviceACM\faction\support\PiggyFactionSupport;
 use fernanACM\DeviceACM\faction\support\SimpleFactionSupport;
 
 class DV extends PluginBase{
-
     # Config
     public Config $config;
-    # CheckConfig
-    public const CONFIG_VERSION = "1.0.0";
-    # Instance
-    public static $instance;
+    /** @var DV $instance */
+    public static DV $instance;
     # Faction
 	public static $factionType;
+    # CheckConfig
+    public const CONFIG_VERSION = "2.0.0";
 
+    /**
+     * @return void
+     */
     public function onLoad(): void{
         self::$instance = $this;
+        $this->loadFiles();
     }
 
+    /**
+     * @return void
+     */
     public function onEnable(): void{
-        $this->loadFiles();
         $this->loadCheck();
         $this->loadFaction();
         $this->loadEvents();
     }
 
-    public function loadEvents(){
-        Server::getInstance()->getPluginManager()->registerEvents(new Event($this), $this);
-        $this->getScheduler()->scheduleRepeatingTask(new DeviceTask($this), 11);
+    /**
+     * @return void
+     */
+    public function loadEvents(): void{
+        Server::getInstance()->getPluginManager()->registerEvents(new Event(), $this);
+        $this->getScheduler()->scheduleRepeatingTask(new DeviceTask(), 11);
     }
 
-    public function loadFiles(){
+    /**
+     * @return void
+     */
+    public function loadFiles(): void{
         $this->saveResource("config.yml");
         $this->config = new Config($this->getDataFolder() . "config.yml");
     }
 
-    public function loadCheck(){
+    /**
+     * @return void
+     */
+    public function loadCheck(): void{
         # CONFIG
         if((!$this->config->exists("config-version")) || ($this->config->get("config-version") != self::CONFIG_VERSION)){
             rename($this->getDataFolder() . "config.yml", $this->getDataFolder() . "config_old.yml");
@@ -71,7 +87,10 @@ class DV extends PluginBase{
         }
     }
 
-    public function loadFaction(){
+    /**
+     * @return void
+     */
+    public function loadFaction(): void{
         if($this->config->get("FactionSupport") === true){
             foreach(Server::getInstance()->getPluginManager()->getPlugins() as $plugin){
                 if($plugin instanceof \DaPigGuy\PiggyFactions\PiggyFactions){
@@ -84,43 +103,75 @@ class DV extends PluginBase{
                     self::$factionType = new SimpleFactionSupport($plugin);
                     return;
                 }
+                if($plugin instanceof \Wertzui123\BedrockClans\Main){
+                    $this->getLogger()->notice("BedrockClans factions support has been loaded.");
+                    self::$factionType = new BedrockClansSupport($plugin);
+                    return;
+                }
+                if($plugin instanceof \ShockedPlot7560\FactionMaster\FactionMaster){
+                    $this->getLogger()->notice("FactionMaster factions support has been loaded.");
+                    self::$factionType = new FactionMasterSupport($plugin);
+                    return;
+                    return;
+                }
             }
         }
         $this->getLogger()->critical("Faction support has been canceled because it has not been found");
     }
 
+    /**
+     * @param Player $player
+     * @return string
+     */
     public static function getPlayerPlatform(Player $player): string{
         $extraData = $player->getPlayerInfo()->getExtraData();
+        $config = self::$instance->config;
         if($extraData["DeviceOS"] === DeviceOS::ANDROID && $extraData["DeviceModel"] === ""){
             return "Linux";
         }
-        return match ($extraData["DeviceOS"]){
-            DeviceOS::ANDROID => "Android",
-            DeviceOS::IOS => "iOS",
-            DeviceOS::OSX => "macOS",
-            DeviceOS::AMAZON => "FireOS",
-            DeviceOS::GEAR_VR => "Gear VR",
-            DeviceOS::HOLOLENS => "Hololens",
-            DeviceOS::WINDOWS_10 => "Windows",
-            DeviceOS::WIN32 => "Windows 7 (Edu)",
-            DeviceOS::DEDICATED => "Dedicated",
-            DeviceOS::TVOS => "TV OS",
-            DeviceOS::PLAYSTATION => "PlayStation",
-            DeviceOS::NINTENDO => "Nintendo Switch",
-            DeviceOS::XBOX => "Xbox",
-            DeviceOS::WINDOWS_PHONE => "Windows Phone",
-            default => "Unknown"
+        return match($extraData["DeviceOS"]){
+            DeviceOS::ANDROID => $config->getNested("Platform.Android"),
+            DeviceOS::IOS => $config->getNested("Platform.iOS"),
+            DeviceOS::OSX => $config->getNested("Platform.macOS"),
+            DeviceOS::AMAZON => $config->getNested("Platform.FireOS"),
+            DeviceOS::GEAR_VR => $config->getNested("Platform.GearVR"),
+            DeviceOS::HOLOLENS => $config->getNested("Platform.Hololens"),
+            DeviceOS::WINDOWS_10 => $config->getNested("Platform.Windows10"),
+            DeviceOS::WIN32 => $config->getNested("Platform.Windows7"),
+            DeviceOS::DEDICATED => $config->getNested("Platform.Dedicated"),
+            DeviceOS::TVOS => $config->getNested("Platform.TVOS"),
+            DeviceOS::PLAYSTATION => $config->getNested("Platform.PlayStation"),
+            DeviceOS::NINTENDO => $config->getNested("Platform.NintendoSwitch"),
+            DeviceOS::XBOX => $config->getNested("Platform.Xbox"),
+            DeviceOS::WINDOWS_PHONE => $config->getNested("Platform.WindowsPhone"),
+            default => $config->getNested("Platform.Unknown")
         };
     }
 
-    public static function getScore(Player $player, string $key){
-        return PluginUtils::DeviceCode($player, DV::getInstance()->config->getNested($key, $key));
+    /**
+     * @param Player $player
+     * @param string $key
+     * @return string
+     */
+    public static function getScore(Player $player, string $key): string{
+        $messageArray = self::$instance->config->getNested($key, []);
+        if(!is_array($messageArray)){
+            $messageArray = [$messageArray];
+        }
+        $message = implode("\n", $messageArray);
+        return PluginUtils::DeviceCode($player, $message);
     }
 
+    /**
+     * @return FactionSupport
+     */
     public static function getFactionType(): FactionSupport{
         return self::$factionType;
     }
 
+    /**
+     * @return DV
+     */
     public static function getInstance(): DV{
         return self::$instance;
     }

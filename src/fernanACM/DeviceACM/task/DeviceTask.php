@@ -18,6 +18,9 @@ use fernanACM\DeviceACM\DV;
 
 class DeviceTask extends Task{
 
+	/**
+	 * @return void
+	 */
 	public function onRun(): void{
 		foreach(Server::getInstance()->getOnlinePlayers() as $player){
 			$player->setNameTagVisible();
@@ -25,7 +28,8 @@ class DeviceTask extends Task{
 			// FACTION SUPPORT
 			if(DV::$factionType){
 				$data = DV::getScore($player, "Devicetag.line");
-				$faction = str_replace(["{FACTION}", "{FACTION_RANK}", "{FACTION_POWER}"], [DV::getFactionType()->getFaction($player), DV::getFactionType()->getFactionRank($player), DV::getFactionType()->getFactionPower($player)], $data);
+				$facType = DV::getFactionType();
+				$faction = str_replace(["{FACTION}", "{FACTION_RANK}", "{FACTION_POWER}"], [$facType->getFaction($player), $facType->getFactionRank($player), $facType->getFactionPower($player)], $data);
 				$player->setScoreTag($faction);
 			}
 		}

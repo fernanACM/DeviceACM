@@ -21,7 +21,11 @@ use fernanACM\DeviceACM\utils\PluginUtils;
 
 class Event implements Listener{
 
-    public function onDataPacketReceive(DataPacketReceiveEvent $event){
+    /**
+     * @param DataPacketReceiveEvent $event
+     * @return void
+     */
+    public function onDataPacketReceive(DataPacketReceiveEvent $event): void{
         $player = $event->getOrigin()->getPlayer();
         $packet = $event->getPacket();
         if($packet instanceof InventoryTransactionPacket){
