@@ -14,6 +14,7 @@
 * [X] Configuration
 * [x] Faction support
 * [x] ScoreTag customization.
+* [x] Platform 
 * [x] Keys in config.yml.
 
 ### 💾 Config 
