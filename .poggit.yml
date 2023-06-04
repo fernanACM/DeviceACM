@@ -1,11 +1,15 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/fernanACM/DeviceACM
 build-by-default: true
 branches:
+- PM5
 - PM4
 projects:
   DeviceACM:
     path: ""
     icon: icon-deviceacm.png
+    libs:
+      - src: ACM-PocketMine-MP/libPiggyUpdateChecker/libPiggyUpdateChecker
+        version: ^2.0.0
     lint:
       phpstan: false
 ...

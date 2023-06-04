@@ -19,6 +19,8 @@ use pocketmine\utils\Config;
 
 use pocketmine\network\mcpe\protocol\types\DeviceOS;
 
+use DaPigGuy\libPiggyUpdateChecker\libPiggyUpdateChecker;
+
 use fernanACM\DeviceACM\task\DeviceTask;
 
 use fernanACM\DeviceACM\Event;
@@ -54,6 +56,7 @@ class DV extends PluginBase{
      */
     public function onEnable(): void{
         $this->loadCheck();
+        $this->loadVirions();
         $this->loadFaction();
         $this->loadEvents();
     }
@@ -90,6 +93,24 @@ class DV extends PluginBase{
     /**
      * @return void
      */
+    public function loadVirions(): void{
+        foreach([
+            "libPiggyUpdateChecker" => libPiggyUpdateChecker::class
+            ] as $virion => $class
+        ){
+            if(!class_exists($class)){
+                $this->getLogger()->error($virion . " virion not found. Please download DeviceACM from Poggit-CI or use DEVirion (not recommended).");
+                $this->getServer()->getPluginManager()->disablePlugin($this);
+                return;
+            }
+        }
+        # Update
+        libPiggyUpdateChecker::init($this);
+    }
+
+    /**
+     * @return void
+     */
     public function loadFaction(): void{
         if($this->config->get("FactionSupport") === true){
             foreach(Server::getInstance()->getPluginManager()->getPlugins() as $plugin){
@@ -111,7 +132,6 @@ class DV extends PluginBase{
                 if($plugin instanceof \ShockedPlot7560\FactionMaster\FactionMaster){
                     $this->getLogger()->notice("FactionMaster factions support has been loaded.");
                     self::$factionType = new FactionMasterSupport($plugin);
-                    return;
                     return;
                 }
             }
