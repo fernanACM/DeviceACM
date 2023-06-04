@@ -4,7 +4,7 @@
 
 # DeviceACM
 
-**A simple and customizable tag via 'config.yml'. Shows your health, hunger, connection, device, cps and faction (ONLY IF YOU ACTIVATE SUPPORT). The best tag for Pocketmine 4.0 servers.**
+**A simple and customizable tag via 'config.yml'. Shows your health, hunger, connection, device, cps and faction (ONLY IF YOU ACTIVATE SUPPORT). The best tag for Pocketmine 5.0 servers.**
 
 ![1665729976547](https://user-images.githubusercontent.com/83558341/195784419-7efde11a-f0f0-4dc2-ad3c-69616cbfb611.png)
 
