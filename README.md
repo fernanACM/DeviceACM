@@ -14,6 +14,7 @@
 * [X] Configuration
 * [x] Faction support
 * [x] ScoreTag customization.
+* [x] Platform 
 * [x] Keys in config.yml.
 
 ### 💾 Config 
@@ -121,4 +122,10 @@ Platform:
 | Discord | fernanACM#5078 | [Discord](https://discord.gg/YyE9XFckqb) |
 | GitHub | fernanACM | [GitHub](https://github.com/fernanACM)
 | Poggit | fernanACM | [Poggit](https://poggit.pmmp.io/ci/fernanACM)
+****
+
+### ✔ Credits
+| Authors | Github | Lib |
+|---------|--------|-----|
+| DaPigGuy | [DaPigGuy](https://github.com/DaPigGuy) | [libPiggyUpdateChecker](https://github.com/DaPigGuy/libPiggyUpdateChecker) |
 ****
