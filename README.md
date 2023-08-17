@@ -10,6 +10,9 @@
 
 <a href="https://discord.gg/YyE9XFckqb"><img src="https://img.shields.io/discord/837701868649709568?label=discord&color=7289DA&logo=discord" alt="Discord" /></a>
 
+### 🌍 Wiki
+* Check our plugin [wiki](https://github.com/fernanACM/DeviceACM/wiki) for features and secrets in the...
+
 ### 💡 Implementations
 * [X] Configuration
 * [x] Faction support
@@ -177,6 +180,9 @@ Platform:
 | ShockedPlot7560 | [FactionMaster](https://github.com/FactionMaster/FactionMaster) |
 | rxduz | AdvancedFactions |
 ***
+
+### 📢 Report bug
+* If you find any bugs in this plugin, please let me know via: [issues](https://github.com/fernanACM/DeviceACM/issues)
 
 ### 📞 Contact
 | Redes | Tag | Link |
