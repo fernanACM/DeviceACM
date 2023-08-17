@@ -25,7 +25,7 @@ class SimpleFactionSupport extends FactionSupport{
      */
     public function getFaction(Player $player): string{
         $factionName = null;
-        $factionName = FactionsAPI::getFaction($player->getName());
+        if(FactionsAPI::isInFaction($player->getName()))$factionName = FactionsAPI::getFaction($player->getName());
         if($factionName === "" || is_null($factionName)) $factionName = DV::getInstance()->config->getNested("Faction.no-faction");
         return $factionName;
     }
@@ -36,15 +36,15 @@ class SimpleFactionSupport extends FactionSupport{
      */
     public function getFactionRank(Player $player): string{
         $factionRank = null;
-        foreach(FactionsAPI::getAllPlayers(FactionsAPI::getFaction($player->getName())) as $players){
-            if(FactionsAPI::getRank($players) === "Leader") {
+        if(FactionsAPI::isInFaction($player->getName())){
+            if(FactionsAPI::getRank($player->getName()) === "Leader"){
                 return $factionRank = "Leader";
-            }elseif(FactionsAPI::getRank($players) === "Officer") {
+            }elseif(FactionsAPI::getRank($player->getName()) === "Officer"){
                 return $factionRank = "Officer";
             }
         }
         if($factionRank === "" || is_null($factionRank)) $factionRank = DV::getInstance()->config->getNested("Faction.no-faction-rank");
-        return "NO RANK";
+        return $factionRank;
     }
 
     /**
@@ -53,7 +53,7 @@ class SimpleFactionSupport extends FactionSupport{
      */
     public function getFactionPower(Player $player): string{
         $factionPower = null;
-        $factionPower = FactionsAPI::getPower(FactionsAPI::getFaction($player));
+        if(FactionsAPI::isInFaction($player->getName()))$factionPower = FactionsAPI::getPower(FactionsAPI::getFaction($player));
         if($factionPower === "" || is_null($factionPower)) $factionPower = "0";
         return $factionPower;
     }

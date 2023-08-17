@@ -14,29 +14,28 @@ use pocketmine\player\Player;
 
 use pocketmine\utils\TextFormat;
 
-use fernanACM\DeviceACM\DV;
+use fernanACM\DeviceACM\manager\DeviceManager;
 
 class PluginUtils{
-
-    /** @var array $cps */
-    public static array $cps = [];
 
     /**
      * @param Player $player
      * @param string $score
      * @return string
      */
-    public static function DeviceCode(Player $player, string $score): string{
+    public static function getDeviceCode(Player $player, string $score): string{
         $replacements = [
             "{LINE}" => "\n",
+            "{NAME}" => $player->getName(),
             "{HEALTH}" => $player->getHealth(),
             "{MAX_HEALTH}" => $player->getMaxHealth(),
             "{FOOD}" => $player->getHungerManager()->getFood(),
             "{MAX_FOOD}" => $player->getHungerManager()->getMaxFood(),
             "{PING}" => $player->getNetworkSession()->getPing(),
-            "{DEVICE}" => DV::getPlayerPlatform($player),
+            "{DEVICE}" => DeviceManager::getInstance()->getPlayerPlatform($player),
             "{WORLD}" => $player->getWorld()->getFolderName(),
-            "{CPS}" => self::getCps($player),
+            "{CPS}" => DeviceManager::getInstance()->getCps($player),
+            "{REACH}" => DeviceManager::getInstance()->getReach($player),
             // EXTRA
             "&" => "§",
             "{BLACK}" => TextFormat::BLACK,
@@ -61,40 +60,5 @@ class PluginUtils{
             "{RESET}" => TextFormat::RESET
         ];
         return strtr($score, $replacements);
-    }
-
-    /**
-     * @param Player $player
-     * @return int
-     */
-    public static function getCps(Player $player): int{
-        if(!isset(self::$cps[$player->getDisplayName()])){
-            return 0;
-        }
-        $time = self::$cps[$player->getDisplayName()][0];
-        $cps = self::$cps[$player->getDisplayName()][1];
-        if($time !== time()){
-            unset(self::$cps[$player->getDisplayName()]);
-            return 0;
-        }
-        return $cps;
-    }
-
-    /**
-     * @param Player $player
-     * @return void
-     */
-    public static function setCps(Player $player): void{
-        if(!isset(self::$cps[$player->getDisplayName()])){
-            self::$cps[$player->getDisplayName()] = [time(), 0];
-        }
-        $time = self::$cps[$player->getDisplayName()][0];
-        $cps = self::$cps[$player->getDisplayName()][1];
-        if($time !== time()){
-            $time = time();
-            $cps = 0;
-        }
-        $cps++;
-        self::$cps[$player->getDisplayName()] = [$time, $cps];
     }
 }
