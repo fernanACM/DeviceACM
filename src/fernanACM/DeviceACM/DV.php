@@ -33,8 +33,10 @@ use fernanACM\DeviceACM\faction\support\PiggyFactionSupport;
 use fernanACM\DeviceACM\faction\support\SimpleFactionSupport;
 
 class DV extends PluginBase{
-    # Config
+
+    /** @var Config $config */
     public Config $config;
+    
     /** @var DV $instance */
     private static DV $instance;
     # Faction

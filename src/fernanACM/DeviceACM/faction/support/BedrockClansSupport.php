@@ -39,7 +39,11 @@ class BedrockClansSupport extends FactionSupport{
     public function getFactionRank(Player $player): string{
         $factionRank = null;
         $member = Main::getInstance()->getPlayer($player)->getClan();
-        if(!is_null($member)) $factionRank = Clan::getRankName($member->getRank($player), true);
+        if(!is_null($member)){
+            $rank = $member->getRank($player);
+            if(!is_null($rank))
+                $factionRank = Clan::getRankName($rank, true);
+        }
         if($factionRank === "" || is_null($factionRank)) $factionRank = DV::getInstance()->config->getNested("Faction.no-faction-rank");
         return $factionRank;
     }
