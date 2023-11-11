@@ -23,6 +23,7 @@ use fernanACM\DeviceACM\task\DeviceTask;
 
 use fernanACM\DeviceACM\Event;
 
+use fernanACM\DeviceACM\manager\DeviceManager;
 use fernanACM\DeviceACM\utils\PluginUtils;
 
 use fernanACM\DeviceACM\faction\FactionSupport;
@@ -42,7 +43,7 @@ class DV extends PluginBase{
     # Faction
 	private static $factionType;
     # CheckConfig
-    private const CONFIG_VERSION = "3.0.0";
+    private const CONFIG_VERSION = "4.0.0";
 
     /**
      * @return void
@@ -105,7 +106,7 @@ class DV extends PluginBase{
      * @return void
      */
     private function loadFaction(): void{
-        if($this->config->get("FactionSupport") === true){
+        if(boolval($this->config->get("FactionSupport")) === true){
             foreach(Server::getInstance()->getPluginManager()->getPlugins() as $plugin){
                 if($plugin instanceof \DaPigGuy\PiggyFactions\PiggyFactions){
                     $this->getLogger()->notice("PiggyFactions factions support has been loaded.");
@@ -143,6 +144,13 @@ class DV extends PluginBase{
     private function loadEvents(): void{
         Server::getInstance()->getPluginManager()->registerEvents(new Event, $this);
         $this->getScheduler()->scheduleRepeatingTask(new DeviceTask(), 11);
+    }
+
+    /**
+     * @return DeviceManager
+     */
+    public function getDeviceManager(): DeviceManager{
+        return DeviceManager::getInstance();
     }
 
     /**

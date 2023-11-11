@@ -1,6 +1,6 @@
 name: DeviceACM
 main: fernanACM\DeviceACM\DV
-version: 4.0.1
+version: 4.0.2
 api: 5.3.0
 author: fernanACM
 description: "Simple tag to see your health, hunger, cps, connection, faction and device you use. The best DeviceTag for PocketMine-PM 5.0 servers"

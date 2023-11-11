@@ -25,19 +25,28 @@ class DeviceTask extends Task{
 	public function onRun(): void{
 		foreach(Server::getInstance()->getOnlinePlayers() as $player){
 			if(DeviceManager::getInstance()->getWorldsEnabled($player, DeviceManager::DEVICE)){
-				$player->setNameTagVisible();
+				if($this->isNametagVisible()) $player->setNameTagVisible();
 				$player->setScoreTag(DV::getScore($player, "Devicetag.line"));
 				// FACTION SUPPORT
-				if(DV::getFactionType()){
-					$data = DV::getScore($player, "Devicetag.line");
-					$facType = DV::getFactionType();
-					$faction = str_replace(["{FACTION}", "{FACTION_RANK}", "{FACTION_POWER}"], [$facType->getFaction($player), $facType->getFactionRank($player), $facType->getFactionPower($player)], $data);
-					$player->setScoreTag($faction);
+				if(boolval(DV::getInstance()->config->get("FactionSupport")) === true){
+					if(DV::getFactionType()){
+						$data = DV::getScore($player, "Devicetag.line");
+						$facType = DV::getFactionType();
+						$faction = str_replace(["{FACTION}", "{FACTION_RANK}", "{FACTION_POWER}"], [$facType->getFaction($player), $facType->getFactionRank($player), $facType->getFactionPower($player)], $data);
+						$player->setScoreTag($faction);
+					}
 				}
 			}else{
-				$player->setNameTagVisible();
+				if($this->isNametagVisible()) $player->setNameTagVisible();
 				$player->setScoreTag("");
 			}
 		}
+	}
+
+	/**
+	 * @return boolean
+	 */
+	private function isNametagVisible(): bool{
+		return boolval(DV::getInstance()->config->getNested("Settings.NametagVisible")); 
 	}
 }

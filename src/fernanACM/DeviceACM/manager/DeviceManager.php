@@ -10,9 +10,11 @@
 
 namespace fernanACM\DeviceACM\manager;
 
-use fernanACM\DeviceACM\DV;
-use pocketmine\network\mcpe\protocol\types\DeviceOS;
 use pocketmine\player\Player;
+
+use pocketmine\network\mcpe\protocol\types\DeviceOS;
+
+use fernanACM\DeviceACM\DV;
 
 class DeviceManager{
 
@@ -43,7 +45,7 @@ class DeviceManager{
         $extraData = $player->getPlayerInfo()->getExtraData();
         $config = DV::getInstance()->config;
         if($extraData["DeviceOS"] === DeviceOS::ANDROID && $extraData["DeviceModel"] === ""){
-            return "Linux";
+            return $config->getNested("Platform.Linux");
         }
         return match($extraData["DeviceOS"]){
             DeviceOS::ANDROID => $config->getNested("Platform.Android"),
@@ -138,29 +140,24 @@ class DeviceManager{
     }
 
     /**
+     * Whitelist and blacklist mode: $type = Device or Popup
+     * 
      * @param Player $player
      * @param string $type
      * @return boolean
      */
     public function getWorldsEnabled(Player $player, string $type): bool{
         $mode = DV::getInstance()->config->getNested("Settings.WorldManager.mode");
+        if(boolval($mode) === false){
+            return true;
+        }
         switch(strtolower($mode)){
             case self::BLACKLIST:
-                if($this->isBlacklistMode($player->getWorld()->getFolderName(), $type)){
-                    return false;
-                }
-            break;
+            return $this->isBlacklistMode($player->getWorld()->getFolderName(), $this->checkMode($type));
     
             case self::WHITELIST:
-                if(!$this->isWhitelistMode($player->getWorld()->getFolderName(), $type)){
-                    return false;
-                }
-            break;
-    
-            default:
-                return $this->isWhitelistMode($player->getWorld()->getFolderName(), $type);
+            return $this->isWhitelistMode($player->getWorld()->getFolderName(), $this->checkMode($type));
         }
-        return true;
     }
     
     /**
@@ -181,6 +178,17 @@ class DeviceManager{
     public function isBlacklistMode(string $worldName, string $mode): bool{
         $worldsBlacklist = DV::getInstance()->config->getNested("Settings.WorldManager.{$mode}.worlds-blacklist");
         return !in_array($worldName, $worldsBlacklist);
+    }
+
+    /**
+     * @param string $type
+     * @return string
+     */
+    private function checkMode(string $type): string{
+        if($type !== self::DEVICE && $type !== self::POPUP){
+            return self::DEVICE;
+        }
+        return $type;
     }
 
     /**
