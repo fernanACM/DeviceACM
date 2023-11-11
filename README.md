@@ -35,7 +35,7 @@
 # The best DeviceTag for Pocketmine 5.0 servers.
 
 # VERSION CONFIG
-config-version: "3.0.0"
+config-version: "4.0.0"
 
 # ======(KEYS)======
 # PLUGIN:
@@ -93,14 +93,19 @@ config-version: "3.0.0"
 
 # ==(CONFIGURATION)==
 Settings:
+  # Always keep the player's name tag visible. Only deactivate 
+  # if you think it is necessary
+  # Use "true" or "false" to enable/disable this option
+  NametagVisible: true
   # ==(WORLD MANAGER)==
   # Enable and disable DeviceACM or PopupTag for worlds you 
-  # add to "whitelist" or "blacklist" modes
+  # add to "whitelist" or "blacklist" modes. Use "false" to disable this option
   WorldManager:
     # Valid modes:
     # - whitelist
     # - blacklist
-    mode: whitelist
+    # - false
+    mode: false
     # ==(DEVICE TAG)==
     Device:
       # Add the names of worlds that are in the whitelist
@@ -169,6 +174,7 @@ Platform:
   NintendoSwitch: "Nintendo"
   Xbox: "Xbox"
   WindowsPhone: "Windows Phone"
+  Linux: "Linux"
   Unknown: "Unknown"
 ```
 ### 🛠 Faction support
